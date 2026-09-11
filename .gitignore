@@ -76,6 +76,6 @@ logs/
 /andre_becker_DR4_TP2.docx
 /andre_becker_DR4_TP2.pdf
 docs/molde/
-# O gerador do .docx acompanha os dois acima: sem o molde, ele não roda num clone.
-# O gerador do diagrama continua versionado, porque a figura que ele produz está publicada.
-scripts/gerar-documento.py
+# Ferramentas de entrega, não parte do projeto: geram o .docx e a figura. O que o repositório
+# publica é o resultado, e a figura já está em docs/evidences/.
+scripts/
