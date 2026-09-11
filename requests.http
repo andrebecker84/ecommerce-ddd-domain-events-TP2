@@ -1,0 +1,166 @@
+### Listar usuários
+GET http://localhost:8080/usuarios
+
+### Listar produtos
+GET http://localhost:8080/produtos
+
+### Consultar estoque
+GET http://localhost:8080/estoques
+
+
+###############################################################################
+# Fluxo de pedido: o pagamento passa pela abstração GatewayPagamento
+###############################################################################
+
+### Regra: demais cartões válidos → aprovado (pedido fica PAGO)
+POST http://localhost:8080/pedidos
+Content-Type: application/json
+
+{
+  "usuarioId": 1,
+  "itens": [
+    {
+      "produtoId": 1,
+      "quantidade": 2
+    },
+    {
+      "produtoId": 2,
+      "quantidade": 1
+    }
+  ],
+  "formaPagamento": "CARTAO",
+  "numeroCartao": "5555555555554444"
+}
+
+### Regra: cartão terminado em 1111 → aprovado
+POST http://localhost:8080/pedidos
+Content-Type: application/json
+
+{
+  "usuarioId": 1,
+  "itens": [
+    {
+      "produtoId": 3,
+      "quantidade": 1
+    }
+  ],
+  "formaPagamento": "CARTAO",
+  "numeroCartao": "4111111111111111"
+}
+
+### Regra: cartão terminado em 0000 → bloqueado (422, CARTAO_BLOQUEADO)
+POST http://localhost:8080/pedidos
+Content-Type: application/json
+
+{
+  "usuarioId": 1,
+  "itens": [
+    {
+      "produtoId": 1,
+      "quantidade": 1
+    }
+  ],
+  "formaPagamento": "CARTAO",
+  "numeroCartao": "4111111111110000"
+}
+
+### Regra: valor acima de R$ 10.000,00 → recusado (422, LIMITE_EXCEDIDO)
+POST http://localhost:8080/pedidos
+Content-Type: application/json
+
+{
+  "usuarioId": 1,
+  "itens": [
+    {
+      "produtoId": 4,
+      "quantidade": 2
+    }
+  ],
+  "formaPagamento": "CARTAO",
+  "numeroCartao": "5555555555554444"
+}
+
+### Forma não suportada → recusado (422, FORMA_PAGAMENTO_NAO_SUPORTADA)
+POST http://localhost:8080/pedidos
+Content-Type: application/json
+
+{
+  "usuarioId": 1,
+  "itens": [
+    {
+      "produtoId": 3,
+      "quantidade": 1
+    }
+  ],
+  "formaPagamento": "PIX",
+  "numeroCartao": "5555555555554444"
+}
+
+
+###############################################################################
+# Porta de entrada do contexto de Pagamento
+#
+# É o mesmo contrato que o GatewayPagamentoHttp consome quando
+# pagamento.modo=remoto. Recebe apenas pedidoId e usuarioId, e nenhuma
+# entidade de outro contexto atravessa a fronteira.
+###############################################################################
+
+### Aprovado
+POST http://localhost:8080/pagamentos
+Content-Type: application/json
+
+{
+  "pedidoId": 99,
+  "usuarioId": 1,
+  "valor": 250.00,
+  "formaPagamento": "CARTAO",
+  "numeroCartao": "4111111111111111"
+}
+
+### Regra: valor menor ou igual a zero → recusado (VALOR_INVALIDO)
+POST http://localhost:8080/pagamentos
+Content-Type: application/json
+
+{
+  "pedidoId": 98,
+  "usuarioId": 1,
+  "valor": 0.00,
+  "formaPagamento": "CARTAO",
+  "numeroCartao": "4111111111111111"
+}
+
+### Regra: limite por transação → recusado (LIMITE_EXCEDIDO)
+POST http://localhost:8080/pagamentos
+Content-Type: application/json
+
+{
+  "pedidoId": 97,
+  "usuarioId": 1,
+  "valor": 10000.01,
+  "formaPagamento": "CARTAO",
+  "numeroCartao": "4111111111111111"
+}
+
+### Limite exato → aprovado
+POST http://localhost:8080/pagamentos
+Content-Type: application/json
+
+{
+  "pedidoId": 96,
+  "usuarioId": 1,
+  "valor": 10000.00,
+  "formaPagamento": "CARTAO",
+  "numeroCartao": "4111111111111111"
+}
+
+### Cartão bloqueado
+POST http://localhost:8080/pagamentos
+Content-Type: application/json
+
+{
+  "pedidoId": 95,
+  "usuarioId": 1,
+  "valor": 500.00,
+  "formaPagamento": "CARTAO",
+  "numeroCartao": "4111111111110000"
+}

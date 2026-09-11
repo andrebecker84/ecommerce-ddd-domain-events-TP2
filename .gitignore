@@ -1,0 +1,78 @@
+# ---------- build ----------
+target/
+build/
+out/
+bin/
+*.jar
+*.war
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/timing.properties
+
+# ---------- dependências ----------
+node_modules/
+.pnpm-store/
+vendor/
+.gradle/
+
+# ---------- credenciais e segredos ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+*.truststore
+secrets/
+credentials.json
+application-local.yml
+application-local.yaml
+application-local.properties
+application-secrets.*
+
+# ---------- assistentes de IA ----------
+.claude/
+.cursor/
+.aider*
+.continue/
+
+# ---------- IDEs ----------
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings/
+.apt_generated/
+.factorypath
+nbproject/
+.nb-gradle/
+
+# ---------- sistema operacional e OneDrive ----------
+desktop.ini
+Thumbs.db
+ehthumbs.db
+.DS_Store
+$RECYCLE.BIN/
+
+# ---------- banco e logs ----------
+*.mv.db
+*.trace.db
+*.db
+logs/
+*.log
+
+# ---------- arquivos temporários do Office ----------
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# ---------- entrega acadêmica ----------
+# O documento final e o molde do TP1 ficam fora do Git, como no TP1: o que se publica é o
+# código e o relatório em markdown. O .docx vai direto ao professor.
+/andre_becker_DR4_TP2.docx
+/andre_becker_DR4_TP2.pdf
+docs/molde/
