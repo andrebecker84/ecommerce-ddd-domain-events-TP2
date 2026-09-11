@@ -488,10 +488,15 @@ def converte(markdown):
         # citacao: caixa destacada
         if texto.startswith('>'):
             bloco = []
-            while i < len(linhas) and linhas[i].strip().startswith('>'):
+            while i < len(linhas) and (linhas[i].strip().startswith('>')
+                                       or (bloco and linhas[i].strip().startswith('**'))):
                 bloco.append(linhas[i].strip().lstrip('>').strip())
                 i += 1
-            saida.append(p_destaque(' '.join(x for x in bloco if x), rotulo=''))
+            conteudo = ' '.join(x for x in bloco if x)
+            # A identificação do trabalho já está na capa do molde: disciplina, professor,
+            # aluno, turma. Repeti-la na primeira página do corpo é ruído.
+            if not conteudo.startswith('**Disciplina:**'):
+                saida.append(p_destaque(conteudo, rotulo=''))
             continue
 
         # lista com marcador ou numerada, com continuacao indentada
