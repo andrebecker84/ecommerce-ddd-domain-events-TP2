@@ -17,6 +17,10 @@
 [![Padrão](https://img.shields.io/badge/pattern-Domain%20Events-6D28D9?style=flat-square)](#-o-desenho-do-evento)
 [![Licença](https://img.shields.io/badge/licen%C3%A7a-source%20available-8957e5?style=flat-square)](LICENSE)
 
+<br/>
+
+[![Relatório Técnico](https://img.shields.io/badge/Relat%C3%B3rio%20T%C3%A9cnico-as%2014%20quest%C3%B5es%20respondidas-6D28D9?style=for-the-badge&logo=googledocs&logoColor=white)](docs/RELATORIO_TP2.md)
+
 </div>
 
 ---
@@ -38,6 +42,12 @@ Fiscal, não é problema do domínio.
 > **Aluno:** André Luis Becker  
 > **Trabalho:** Individual  
 > **Trimestre:** 26E3
+
+> [!IMPORTANT]
+> **O trabalho avaliado está em [`docs/RELATORIO_TP2.md`](docs/RELATORIO_TP2.md).** É lá que as 14
+> questões do enunciado estão numeradas e respondidas, com os trechos de código, o desenho da
+> arquitetura de publicação e as evidências. Este README descreve o projeto; o relatório é a
+> entrega.
 
 ---
 
@@ -177,8 +187,9 @@ limpo depois e a publicação acontece **na ordem certa**, primeiro persistir e 
 
 ```text
 .
+├── docs/RELATORIO_TP2.md               ← O TRABALHO: as 14 questões respondidas
 ├── docs/context/                       ← enunciado e rúbrica (fonte de verdade acadêmica)
-├── docs/evidences/                     ← prints das questões 6, 7, 9 e 10
+├── docs/evidences/                     ← a figura da questão 12
 ├── src/main/java/br/edu/infnet/ecommerce/
 │   ├── pagamento/                      ← CONTEXTO DELIMITADO
 │   │   ├── domain/                     ← agregado, VOs, enums, portas (POJO puro)
@@ -197,10 +208,14 @@ limpo depois e a publicação acontece **na ordem certa**, primeiro persistir e 
 
 ## 📄 Documentação
 
-As 14 questões fazem parte do documento de entrega, submetido em PDF diretamente ao professor e
-**não publicado neste repositório**. O enunciado e a rúbrica estão em
-[`docs/context/`](docs/context/). Onde o enunciado original diz "Pet Friends", este trabalho usa o
-projeto **E-commerce** do TP1.
+| Documento | O que traz |
+|---|---|
+| **[`docs/RELATORIO_TP2.md`](docs/RELATORIO_TP2.md)** | **O trabalho.** As 14 questões numeradas, cada uma com o enunciado copiado e respondida, com código, o desenho da questão 12 e as evidências |
+| [`docs/context/`](docs/context/) | Enunciado e rúbrica transcritos, como fonte de verdade acadêmica |
+| [`docs/evidences/`](docs/evidences/) | A figura da arquitetura de publicação |
+
+O mesmo conteúdo do relatório foi entregue ao professor em PDF, gerado a partir dele. Onde o
+enunciado original diz "Pet Friends", este trabalho usa o projeto **E-commerce** do TP1.
 
 ---
 
